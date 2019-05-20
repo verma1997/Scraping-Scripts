@@ -1,19 +1,13 @@
-import requests
-from urllib.request import urlopen as uReq
-import time
-from bs4 import BeautifulSoup as soup
-import csv
-import re
+try:
+	from PIL import Image
+except ImportError:
+	import Image
+import pytesseract
 
-url = "https://en.wikipedia.org/wiki/Hubstaff"
+def ocr_core(filename):
 
-uClient = uReq(url)
+	text = pytesseract.image_to_string(Image.open(filename))
 
-html_page = uClient.read()
+	return text
 
-uClient.close()
-
-page_soup = soup(html_page, "html.parser")
-
-for link in soup.findAll('a', attrs={'href': re.compile("^http://")}):
-    print (link.get('href'))
+print(ocr_core("image.png"))
