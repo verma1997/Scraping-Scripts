@@ -1,6 +1,6 @@
 import requests
-# from urllib.request import urlopen
-import urllib2
+from urllib.request import urlopen
+# import urllib2
 import time
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -8,7 +8,7 @@ import csv
 import re
 import schedule
 
-html = urllib2.urlopen("https://www.sastiticket.com/offers")
+html = urlopen("https://www.sastiticket.com/offers")
 
 page_soup = BeautifulSoup(html, "html.parser")
 
