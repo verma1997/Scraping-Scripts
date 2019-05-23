@@ -24,7 +24,7 @@ links = []
 terms_conditions = []
 
 for offer_names in container:
-	offers.append(offer_names.p.text) 
+	offers.append(offer_names.p.text.replace(",","")) 
 
 for content in promo_container:
 	
@@ -35,7 +35,7 @@ for content in promo_container:
 	conditions = content.find_all("div",{"class":"tnc-section"})
 	
 	for terms in conditions:
-		terms_conditions.append(terms.li.text)
+		terms_conditions.append(terms.li.text.replace(",",""))
 		# print(terms.li.text)
 
 	for promo in promo_content:
@@ -44,6 +44,15 @@ for content in promo_container:
 			promos.append(promo_text.text)
 			# print(promo_text.text)
 
+filename = "goibibo_offers.csv"
+f = open(filename,"a")
+headers = "Offer Name,Link,Promocode,Terms & Condition,Booking Channel \n"
+f.write(headers)	
+
+for i in range(0,total):
+	f.write(offers[i] + "," + links[0] + "," + promos[i] + "," + terms_conditions[i] + "\n")
+
+f.close()
 
 # schedule.every(1).minutes.do(job)
 # schedule.every().day.at("18:43").do(job)
