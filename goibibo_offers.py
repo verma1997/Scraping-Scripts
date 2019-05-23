@@ -7,25 +7,28 @@ import csv
 import re
 import schedule
 
+#building Connection
 html = urlopen("https://www.goibibo.com/offers/")
-
 page_soup = BeautifulSoup(html, "html.parser")
 
+#Dumping data inside variable
 container = page_soup.findAll("div",{"class":"bot-section"})
-
 promo_container = page_soup.findAll("div",{"class":"back-content"})
 
+#Common Length variable
 total = len(container)
 
-
+#Declaring lists
 offers = []
 promos = []
 links = []
 terms_conditions = []
 
+#For Offer Names
 for offer_names in container:
 	offers.append(offer_names.p.text.replace(",","")) 
 
+#For Links, Promocodes, Terms&Conditions
 for content in promo_container:
 	
 	link_text = content.a['href']
@@ -44,6 +47,7 @@ for content in promo_container:
 			promos.append(promo_text.text)
 			# print(promo_text.text)
 
+#Opening csv file to store data
 filename = "goibibo_offers.csv"
 f = open(filename,"a")
 headers = "Offer Name,Link,Promocode,Terms & Condition,Booking Channel \n"
@@ -53,6 +57,8 @@ for i in range(0,total):
 	f.write(offers[i] + "," + links[0] + "," + promos[i] + "," + terms_conditions[i] + "\n")
 
 f.close()
+
+#Scheduler
 
 # schedule.every(1).minutes.do(job)
 # schedule.every().day.at("18:43").do(job)
