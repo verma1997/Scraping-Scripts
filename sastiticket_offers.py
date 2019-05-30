@@ -9,7 +9,6 @@ import re
 import schedule
 
 html = urlopen("https://www.sastiticket.com/offers")
-
 page_soup = BeautifulSoup(html, "html.parser")
 
 offers = []
@@ -49,5 +48,4 @@ schedule.every().seconds.do(job)
 while True:
 	schedule.run_pending()
 	time.sleep(1)
-
 

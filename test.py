@@ -1,13 +1,10 @@
-try:
-	from PIL import Image
-except ImportError:
-	import Image
-import pytesseract
+list1 = [1,2,3]
 
-def ocr_core(filename):
+list2 = list(list1)
 
-	text = pytesseract.image_to_string(Image.open(filename))
+def change():
+    list2[0] = 10
+    print(list1)
 
-	return text
-
-print(ocr_core("image.png"))
+change()
+print(list2)
