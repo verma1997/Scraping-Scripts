@@ -33,49 +33,48 @@ headers = [
 def get_header():
     return {'User-Agent':choice(headers)}
 
-# html = urlopen("https://www.sastiticket.com/offers")
-# url = "https://www.sastiticket.com/offers"
-urls = [
-	"https://www.sastiticket.com/offers/new/",
-	"https://www.sastiticket.com/offers/weekend/",
-	"https://www.sastiticket.com/offers/mobikwik_new/",
-	"https://www.sastiticket.com/offers/bhim/",
-	"https://www.sastiticket.com/offers/rupay/"
-]
+url = "https://www.ixigo.com/offers/"
+html = requests.get(url, get_header())
+soup = BeautifulSoup(html.text, "html.parser")
 
-for i in range(0,len(urls)-1):
-	html = requests.get(urls[i], get_header())
+container = soup.findAll("article",{"class":"post"})
 
-	page_soup = BeautifulSoup(html.text, "html.parser")
+inner_div = []
+for i in container:
+    inner_div.append(i.find("div",{"class":"inner"}))
 
-	containers = page_soup.findAll("div",{"class":"col-lg-12 col-md-12 col-xs-12 col-sm-12"})
+total = len(inner_div)
 
-	for j in containers:
-		temp = j.findAll("ul")
-		print(temp)
+offer_names = []
+offer_description = []
+offer_links = []
+offer_duration = []
+offer_images = []
 
-# def job(url):
-# 	html = requests.get(url, get_header())
+for x in inner_div:
+    names = x.find("h2",{"class":"post-title"})
+    offer_names.append(names.text.replace(",",""))
+    
+    description = x.find("p",{"class":"post-excerpt"})
+    offer_description.append(description.text.replace(",",""))
 
-# 	page_soup = BeautifulSoup(html.text, "html.parser")
+    link = x.find("a",{"class":"post-link"})
+    offer_links.append(link['href'].replace(",",""))
 
-# 	offer = []
-# 	offer_period = []
-# 	offer_category = []
-# 	offer_description = []
+    duration = x.find("span",{"class":"post-date"})
+    offer_duration.append(duration.text.replace(",",""))
 
-# 	containers = page_soup.find("div",{"class":"col-lg-12 col-md-12 col-xs-12 col-sm-12"})
+    image = x.find("a",{"class":"post-preview-image"})
+    offer_images.append(image['style'].replace("background-image: url(",""))
 
-# 	print(containers)
+filename = "ixigo_offers.csv"
+f = open(filename,"a")
+headers = "Offer Name,Link,Description,Duration,Image Link,Booking Channel \n"
+f.write(headers)    
 
+for i in range(0,total):
+    f.write(offer_names[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_duration[i] + "," + offer_images[i] + "\n")
 
-
-# schedule.every(1).minutes.do(job)
-# schedule.every().day.at("18:43").do(job)
-# schedule.every().hour.do(job)
-# schedule.every().seconds.do(job)
-
-# while True:
-# 	schedule.run_pending()
-# 	time.sleep(1)
-
+f.close()
+        
+        

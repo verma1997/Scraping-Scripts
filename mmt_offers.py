@@ -1,12 +1,7 @@
 from random import choice
 import requests
-from urllib.request import urlopen
-import time
+import urllib.request
 from bs4 import BeautifulSoup
-from datetime import datetime
-import csv
-import re
-import schedule
 
 headers = [
     'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
@@ -31,51 +26,14 @@ headers = [
 ]
 
 def get_header():
-    return {'User-Agent':choice(headers)}
+	return {'User-Agent':choice(headers)}
 
-# html = urlopen("https://www.sastiticket.com/offers")
-# url = "https://www.sastiticket.com/offers"
-urls = [
-	"https://www.sastiticket.com/offers/new/",
-	"https://www.sastiticket.com/offers/weekend/",
-	"https://www.sastiticket.com/offers/mobikwik_new/",
-	"https://www.sastiticket.com/offers/bhim/",
-	"https://www.sastiticket.com/offers/rupay/"
-]
+url = "https://www.goibibo.com/offers/"
 
-for i in range(0,len(urls)-1):
-	html = requests.get(urls[i], get_header())
+html = requests.get(url, headers=get_header())
 
-	page_soup = BeautifulSoup(html.text, "html.parser")
+soup = BeautifulSoup(html.text, 'html.parser')
 
-	containers = page_soup.findAll("div",{"class":"col-lg-12 col-md-12 col-xs-12 col-sm-12"})
+container = soup.findAll("ul",{"class":"itemBoxWrap"})
 
-	for j in containers:
-		temp = j.findAll("ul")
-		print(temp)
-
-# def job(url):
-# 	html = requests.get(url, get_header())
-
-# 	page_soup = BeautifulSoup(html.text, "html.parser")
-
-# 	offer = []
-# 	offer_period = []
-# 	offer_category = []
-# 	offer_description = []
-
-# 	containers = page_soup.find("div",{"class":"col-lg-12 col-md-12 col-xs-12 col-sm-12"})
-
-# 	print(containers)
-
-
-
-# schedule.every(1).minutes.do(job)
-# schedule.every().day.at("18:43").do(job)
-# schedule.every().hour.do(job)
-# schedule.every().seconds.do(job)
-
-# while True:
-# 	schedule.run_pending()
-# 	time.sleep(1)
-
+print(container)
