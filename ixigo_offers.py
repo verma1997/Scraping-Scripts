@@ -7,6 +7,7 @@ from datetime import datetime
 import csv
 import re
 import schedule
+import io
 
 headers = [
     'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
@@ -34,6 +35,7 @@ def get_header():
     return {'User-Agent':choice(headers)}
 
 url = "https://www.ixigo.com/offers/"
+
 html = requests.get(url, get_header())
 soup = BeautifulSoup(html.text, "html.parser")
 
@@ -68,7 +70,7 @@ for x in inner_div:
     offer_images.append(image['style'].replace("background-image: url(",""))
 
 filename = "ixigo_offers.csv"
-f = open(filename,"a")
+f = open(filename,"a",encoding="utf-8")
 headers = "Offer Name,Link,Description,Duration,Image Link,Booking Channel \n"
 f.write(headers)    
 

@@ -2,7 +2,6 @@ from random import choice
 import requests
 import urllib.request
 from bs4 import BeautifulSoup
-import io
 
 headers = [
     'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
@@ -29,40 +28,43 @@ headers = [
 def get_header():
 	return {'User-Agent':choice(headers)}
 
-url = "https://www.goindigo.in/campaigns/indigo-offers.html"
+url = "https://www.easemytrip.com/deals.html"
 
 html = requests.get(url, headers=get_header())
 
 soup = BeautifulSoup(html.text, 'html.parser')
 
-container = soup.findAll("div",{"class":"commonBottomAdon"})
+container = soup.findAll("div",{"class":"deal"})
 
 total = len(container)
 
-offer_links = []
-offer_image = []
 offer_name = []
 offer_description = []
+offer_promocode = []
+offer_validity = []
+offer_image = []
+offer_link = []
 
-for i in container:
-    links = i.find("a")
-    offer_links.append(links['href'])
+for content in container:
+    image = content.find("img")
+    offer_image.append(image['src'].replace(",",""))
 
-    image = i.find("img")
-    offer_image.append("https://www.goindigo.in" + image['src'])
-
-    name = i.find("h6")
+    name = content.find("div",{"class":"dealName"})
     offer_name.append(name.text.replace(",",""))
 
-    description = i.find("p")
+    description = content.find("p")
     offer_description.append(description.text.replace(",",""))
 
-filename = "indigo_offers.csv"
-f = open(filename,"a",encoding="utf-8")
-headers = "Offer Name,Link,Description,Image Link,Booking Channel \n"
+    link = content.find("a")
+    offer_link.append(link['href'].replace(",",""))
+    
+filename = "easemytrip_offers.csv"
+f = open(filename,"a")
+headers = "Offer Name,Link,Description,Image Link,Validity \n"
 f.write(headers)    
 
 for i in range(0,total):
-    f.write(offer_name[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
+    f.write(offer_name[i] + "," + offer_link[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
 
 f.close()
+    

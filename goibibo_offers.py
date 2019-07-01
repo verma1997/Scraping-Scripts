@@ -80,7 +80,7 @@ for content in promo_container:
 #Opening csv file to store data
 filename = "goibibo_offers.csv"
 f = open(filename,"a")
-headers = "Offer Name,Link,Promocode,Terms & Condition,Booking Channel \n"
+headers = "Offer Name,Link,Promocode,Description,Booking Channel \n"
 f.write(headers)	
 
 for i in range(0,total):
