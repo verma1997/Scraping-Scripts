@@ -35,34 +35,47 @@ html = requests.get(url, headers=get_header())
 
 soup = BeautifulSoup(html.text, 'html.parser')
 
-container = soup.findAll("div",{"class":"commonBottomAdon"})
+def job():
+    container = soup.findAll("div",{"class":"commonBottomAdon"})
 
-total = len(container)
+    total = len(container)
 
-offer_links = []
-offer_image = []
-offer_name = []
-offer_description = []
+    offer_links = []
+    offer_image = []
+    offer_name = []
+    offer_description = []
 
-for i in container:
-    links = i.find("a")
-    offer_links.append(links['href'])
+    for i in container:
+        links = i.find("a")
+        offer_links.append(links['href'])
 
-    image = i.find("img")
-    offer_image.append("https://www.goindigo.in" + image['src'])
+        image = i.find("img")
+        offer_image.append("https://www.goindigo.in" + image['src'])
 
-    name = i.find("h6")
-    offer_name.append(name.text.replace(",",""))
+        name = i.find("h6")
+        offer_name.append(name.text.replace(",",""))
 
-    description = i.find("p")
-    offer_description.append(description.text.replace(",",""))
+        description = i.find("p")
+        offer_description.append(description.text.replace(",",""))
 
-filename = "indigo_offers.csv"
-f = open(filename,"a",encoding="utf-8")
-headers = "Offer Name,Link,Description,Image Link,Booking Channel \n"
-f.write(headers)    
+    filename = "indigo_offers.csv"
+    f = open(filename,"a",encoding="utf-8")
+    headers = "Offer Name,Link,Description,Image Link,Booking Channel \n"
+    f.write(headers)    
 
-for i in range(0,total):
-    f.write(offer_name[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
+    for i in range(0,total):
+        f.write(offer_name[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
 
-f.close()
+    f.close()
+
+
+# Scheduler
+
+# schedule.every().hour.do(job)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
+
+
+

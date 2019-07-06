@@ -39,44 +39,51 @@ url = "https://www.ixigo.com/offers/"
 html = requests.get(url, get_header())
 soup = BeautifulSoup(html.text, "html.parser")
 
-container = soup.findAll("article",{"class":"post"})
+def job():
+    container = soup.findAll("article",{"class":"post"})
 
-inner_div = []
-for i in container:
-    inner_div.append(i.find("div",{"class":"inner"}))
+    inner_div = []
+    for i in container:
+        inner_div.append(i.find("div",{"class":"inner"}))
 
-total = len(inner_div)
+    total = len(inner_div)
 
-offer_names = []
-offer_description = []
-offer_links = []
-offer_duration = []
-offer_images = []
+    offer_names = []
+    offer_description = []
+    offer_links = []
+    offer_duration = []
+    offer_images = []
 
-for x in inner_div:
-    names = x.find("h2",{"class":"post-title"})
-    offer_names.append(names.text.replace(",",""))
-    
-    description = x.find("p",{"class":"post-excerpt"})
-    offer_description.append(description.text.replace(",",""))
-
-    link = x.find("a",{"class":"post-link"})
-    offer_links.append(link['href'].replace(",",""))
-
-    duration = x.find("span",{"class":"post-date"})
-    offer_duration.append(duration.text.replace(",",""))
-
-    image = x.find("a",{"class":"post-preview-image"})
-    offer_images.append(image['style'].replace("background-image: url(",""))
-
-filename = "ixigo_offers.csv"
-f = open(filename,"a",encoding="utf-8")
-headers = "Offer Name,Link,Description,Duration,Image Link,Booking Channel \n"
-f.write(headers)    
-
-for i in range(0,total):
-    f.write(offer_names[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_duration[i] + "," + offer_images[i] + "\n")
-
-f.close()
+    for x in inner_div:
+        names = x.find("h2",{"class":"post-title"})
+        offer_names.append(names.text.replace(",",""))
         
+        description = x.find("p",{"class":"post-excerpt"})
+        offer_description.append(description.text.replace(",",""))
+
+        link = x.find("a",{"class":"post-link"})
+        offer_links.append(link['href'].replace(",",""))
+
+        duration = x.find("span",{"class":"post-date"})
+        offer_duration.append(duration.text.replace(",",""))
+
+        image = x.find("a",{"class":"post-preview-image"})
+        offer_images.append(image['style'].replace("background-image: url(",""))
+
+    filename = "ixigo_offers.csv"
+    f = open(filename,"a",encoding="utf-8")
+    headers = "Offer Name,Link,Description,Duration,Image Link,Booking Channel \n"
+    f.write(headers)    
+
+    for i in range(0,total):
+        f.write(offer_names[i] + "," + offer_links[0] + "," + offer_description[i] + "," + offer_duration[i] + "," + offer_images[i] + "\n")
+
+    f.close()
         
+# Scheduler
+
+# schedule.every().hour.do(job)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)        

@@ -34,29 +34,38 @@ html = requests.get(url, headers=get_header())
 
 soup = BeautifulSoup(html.text, 'html.parser')
 
-container = soup.findAll("li",{"class":"slider-slide"})
+def job():
+    container = soup.findAll("li",{"class":"slider-slide"})
 
-total = len(container)
+    total = len(container)
 
-offer_links = []
-offer_promocode = []
-offer_image = []
+    offer_links = []
+    offer_promocode = []
+    offer_image = []
 
-for i in container:
-    link = i.find("a")
-    offer_links.append(link['href'])
-    offer_image.append(link.img['src'])    
-    
-    promo = i.find("p",{"class":"PromoCode"})
-    offer_promocode.append(promo.text.replace("Use promocode : ",""))    
+    for i in container:
+        link = i.find("a")
+        offer_links.append(link['href'])
+        offer_image.append(link.img['src'])    
+        
+        promo = i.find("p",{"class":"PromoCode"})
+        offer_promocode.append(promo.text.replace("Use promocode : ",""))    
 
-filename = "paytm_offers.csv"
-f = open(filename,"a")
-headers = "Link,Image Link, Promocode \n"
-f.write(headers)    
+    filename = "paytm_offers.csv"
+    f = open(filename,"a")
+    headers = "Link,Image Link, Promocode \n"
+    f.write(headers)    
 
-for i in range(0,total):
-    f.write(offer_links[0] + "," + offer_image[i] + "," + offer_promocode[i] + "\n")
+    for i in range(0,total):
+        f.write(offer_links[0] + "," + offer_image[i] + "," + offer_promocode[i] + "\n")
 
-f.close()
+    f.close()
+
+# Scheduler
+
+# schedule.every().hour.do(job)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)    
     

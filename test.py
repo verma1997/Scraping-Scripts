@@ -1,10 +1,17 @@
-list1 = [1,2,3]
+import schedule
+import time
+from datetime import datetime
 
-list2 = list(list1)
+a = "Priyanshu"
 
-def change():
-    list2[0] = 10
-    print(list1)
+def job():
+	print(a)
 
-change()
-print(list2)
+schedule.every(1).minutes.do(job)
+# schedule.every().day.at("10:50").do(job)
+# schedule.every().hour.do(job)
+# schedule.every().seconds.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(5)

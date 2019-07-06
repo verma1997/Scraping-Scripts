@@ -34,37 +34,45 @@ html = requests.get(url, headers=get_header())
 
 soup = BeautifulSoup(html.text, 'html.parser')
 
-container = soup.findAll("div",{"class":"deal"})
+def job():
+    container = soup.findAll("div",{"class":"deal"})
 
-total = len(container)
+    total = len(container)
 
-offer_name = []
-offer_description = []
-offer_promocode = []
-offer_validity = []
-offer_image = []
-offer_link = []
+    offer_name = []
+    offer_description = []
+    offer_promocode = []
+    offer_validity = []
+    offer_image = []
+    offer_link = []
 
-for content in container:
-    image = content.find("img")
-    offer_image.append(image['src'].replace(",",""))
+    for content in container:
+        image = content.find("img")
+        offer_image.append(image['src'].replace(",",""))
 
-    name = content.find("div",{"class":"dealName"})
-    offer_name.append(name.text.replace(",",""))
+        name = content.find("div",{"class":"dealName"})
+        offer_name.append(name.text.replace(",",""))
 
-    description = content.find("p")
-    offer_description.append(description.text.replace(",",""))
+        description = content.find("p")
+        offer_description.append(description.text.replace(",",""))
 
-    link = content.find("a")
-    offer_link.append(link['href'].replace(",",""))
+        link = content.find("a")
+        offer_link.append(link['href'].replace(",",""))
+        
+    filename = "easemytrip_offers.csv"
+    f = open(filename,"a")
+    headers = "Offer Name,Link,Description,Image Link,Validity \n"
+    f.write(headers)    
+
+    for i in range(0,total):
+        f.write(offer_name[i] + "," + offer_link[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
+
+    f.close()
     
-filename = "easemytrip_offers.csv"
-f = open(filename,"a")
-headers = "Offer Name,Link,Description,Image Link,Validity \n"
-f.write(headers)    
+# Scheduler
 
-for i in range(0,total):
-    f.write(offer_name[i] + "," + offer_link[0] + "," + offer_description[i] + "," + offer_image[i] + "\n")
+# schedule.every().hour.do(job)
 
-f.close()
-    
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)

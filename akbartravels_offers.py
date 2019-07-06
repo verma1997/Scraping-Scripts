@@ -35,37 +35,48 @@ html = requests.get(url, headers=get_header())
 
 soup = BeautifulSoup(html.text, 'html.parser')
 
-container = soup.findAll("div",{"class":["deals-cntent-left","deals-cntent-center","deals-cntent-right"]})
+def job():
+    container = soup.findAll("div",{"class":["deals-cntent-left","deals-cntent-center","deals-cntent-right"]})
 
-total = len(container)
+    total = len(container)
 
-offer_image = []
-offer_name = []
-offer_description = []
-offer_validity = []
+    offer_image = []
+    offer_name = []
+    offer_description = []
+    offer_validity = []
 
-for i in container:
-    image = i.find("img")
-    offer_image.append(image['src'])
+    for i in container:
+        image = i.find("img")
+        offer_image.append(image['src'])
 
-    title = i.find("div",{"class":"deals-cntent-name"})
-    offer_name.append(title.text.replace(",",""))
+        title = i.find("div",{"class":"deals-cntent-name"})
+        offer_name.append(title.text.replace(",",""))
 
-    description = i.find("div",{"class":"deals-cntent-disc"})
-    offer_description.append(description.text.replace(",",""))
+        description = i.find("div",{"class":"deals-cntent-disc"})
+        offer_description.append(description.text.replace(",",""))
 
-    validity = i.find("div",{"class":"deals-box-ftr-left"})
-    offer_validity.append(validity.text)
+        validity = i.find("div",{"class":"deals-box-ftr-left"})
+        offer_validity.append(validity.text)
 
-filename = "akbartravels_offers.csv"
-f = open(filename,"a")
-headers = "Offer Name,Image Link,Description,Validity \n"
-f.write(headers)    
+    filename = "akbartravels_offers.csv"
+    f = open(filename,"a")
+    headers = "Offer Name,Image Link,Description,Validity \n"
+    f.write(headers)    
 
-for i in range(0,total):
-    f.write(offer_name[i] + "," + offer_image[i] + "," + offer_description[i] + "," + offer_validity[i] + "\n")
+    for i in range(0,total):
+        f.write(offer_name[i] + "," + offer_image[i] + "," + offer_description[i] + "," + offer_validity[i] + "\n")
 
-f.close()
+    f.close()
+
+
+
+# Scheduler
+
+# schedule.every().hour.do(job)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
 
 
