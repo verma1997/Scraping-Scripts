@@ -20,8 +20,13 @@ Web scraping assignments
 
 Still in progress
 ## How it works?
+### Installation
 1. `pip install beautifulsoup4`
 2. `pip install schedule`
+### Want to run a file?
+1. Open the command prompt
+2. Run `python filename.py`
+>It will run that particular python file and save the scraped data in a csv file in the same folder.
 
 ## How to use scheduler:
   ### Task scheduling 
@@ -29,7 +34,8 @@ Still in progress
    schedule.every(10).minutes.do(job_name) 
 
    #### After every hour. 
-   schedule.every().hour.do(job_name) 
+   schedule.every().hour.do(job_name)
+   >In our case, this will be useful.
 
    #### Every day at 12am or 00:00. 
    schedule.every().day.at("00:00").do(job_name) 
