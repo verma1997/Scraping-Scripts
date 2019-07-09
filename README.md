@@ -19,7 +19,8 @@ Web scraping assignments
 | 9.    | Akbartravels  | CSV             | Done       |
 
 Still in progress
-## How it works?
+## How to Use?
+`git clone https://github.com/verma1997/Densiti.git`
 ### Installation
 1. `pip install beautifulsoup4`
 2. `pip install schedule`
