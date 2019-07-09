@@ -43,4 +43,6 @@ Still in progress
    #### After every 5 to 10mins in between. 
    schedule.every(5).to(10).minutes.do(job_name)
    
+   More About Scheduler [Link](https://www.geeksforgeeks.org/python-schedule-library/)
+   
 <p align="center"> Made with ❤ by <a href="https://github.com/verma1997">Priyanshu Verma</a></p>
