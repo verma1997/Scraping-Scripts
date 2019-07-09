@@ -35,5 +35,6 @@ Still in progress
    schedule.every().day.at("00:00").do(job_name) 
 
    #### After every 5 to 10mins in between. 
-   schedule.every(5).to(10).minutes.do(job_name) 
-  
+   schedule.every(5).to(10).minutes.do(job_name)
+   
+<p align="center"> Made with ❤ by <a href="https://github.com/verma1997">Priyanshu Verma</a></p>
