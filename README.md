@@ -29,7 +29,7 @@ Still in progress
 >It will run that particular python file and save the scraped data in a csv file in the same folder.
 
 ## How to use scheduler:
-  ### Task scheduling 
+  ### [Task scheduling](https://www.geeksforgeeks.org/python-schedule-library/) 
    #### After every 10mins.  
    schedule.every(10).minutes.do(job_name) 
 
@@ -42,7 +42,5 @@ Still in progress
 
    #### After every 5 to 10mins in between. 
    schedule.every(5).to(10).minutes.do(job_name)
-   
-   More About Scheduler [Link](https://www.geeksforgeeks.org/python-schedule-library/)
    
 <p align="center"> Made with ❤ by <a href="https://github.com/verma1997">Priyanshu Verma</a></p>
