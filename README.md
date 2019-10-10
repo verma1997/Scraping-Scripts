@@ -1,4 +1,4 @@
-# Circles - IIMA
+# Scripts for scraping offers from different websites.
 Web scraping assignments
 
 ## Technologies Used:
