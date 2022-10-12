@@ -20,7 +20,7 @@ Web scraping assignments
 
 Still in progress
 ## How to Use?
-`git clone https://github.com/verma1997/Densiti.git`
+`git clone https://github.com/verma1997/Scraping-Scripts.git`
 ### Installation
 1. `pip install beautifulsoup4`
 2. `pip install schedule`
